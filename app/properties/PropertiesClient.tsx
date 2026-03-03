@@ -15,37 +15,20 @@ export default function PropertiesClient() {
   const [maxPrice, setMaxPrice] = useState('');
   const [beds, setBeds] = useState('');
   const [filtered, setFiltered] = useState(properties);
+  const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
     let result = properties;
-
-    if (location) {
-      result = result.filter(p =>
-        p.location.toLowerCase().includes(location.toLowerCase())
-      );
-    }
-    if (type) {
-      result = result.filter(p => p.type === type);
-    }
-    if (minPrice) {
-      result = result.filter(p => p.price >= parseInt(minPrice));
-    }
-    if (maxPrice) {
-      result = result.filter(p => p.price <= parseInt(maxPrice));
-    }
-    if (beds) {
-      result = result.filter(p => p.beds >= parseInt(beds));
-    }
-
+    if (location) result = result.filter(p => p.location.toLowerCase().includes(location.toLowerCase()));
+    if (type) result = result.filter(p => p.type === type);
+    if (minPrice) result = result.filter(p => p.price >= parseInt(minPrice));
+    if (maxPrice) result = result.filter(p => p.price <= parseInt(maxPrice));
+    if (beds) result = result.filter(p => p.beds >= parseInt(beds));
     setFiltered(result);
   }, [location, type, minPrice, maxPrice, beds]);
 
   const clearFilters = () => {
-    setLocation('');
-    setType('');
-    setMinPrice('');
-    setMaxPrice('');
-    setBeds('');
+    setLocation(''); setType(''); setMinPrice(''); setMaxPrice(''); setBeds('');
   };
 
   const inputStyle = {
@@ -68,16 +51,109 @@ export default function PropertiesClient() {
     display: 'block',
   };
 
+  const filterPanel = (
+    <div style={{
+      backgroundColor: '#ffffff', borderRadius: '16px',
+      padding: '28px', boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+    }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+        <h3 style={{ fontWeight: '700', fontSize: '17px', color: '#1e293b' }}>Filters</h3>
+        <button onClick={clearFilters} style={{
+          background: 'none', border: 'none', color: '#2563eb',
+          fontSize: '13px', fontWeight: '600', cursor: 'pointer',
+        }}>Clear All</button>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div>
+          <label style={labelStyle}>Location</label>
+          <input type="text" placeholder="City or state..." value={location}
+            onChange={e => setLocation(e.target.value)} style={inputStyle} />
+        </div>
+        <div>
+          <label style={labelStyle}>Property Type</label>
+          <select value={type} onChange={e => setType(e.target.value)} style={inputStyle}>
+            <option value="">All Types</option>
+            <option value="House">House</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Villa">Villa</option>
+            <option value="Penthouse">Penthouse</option>
+            <option value="Townhouse">Townhouse</option>
+          </select>
+        </div>
+        <div>
+          <label style={labelStyle}>Min Price ($)</label>
+          <input type="number" placeholder="e.g. 200000" value={minPrice}
+            onChange={e => setMinPrice(e.target.value)} style={inputStyle} />
+        </div>
+        <div>
+          <label style={labelStyle}>Max Price ($)</label>
+          <input type="number" placeholder="e.g. 1000000" value={maxPrice}
+            onChange={e => setMaxPrice(e.target.value)} style={inputStyle} />
+        </div>
+        <div>
+          <label style={labelStyle}>Min Bedrooms</label>
+          <select value={beds} onChange={e => setBeds(e.target.value)} style={inputStyle}>
+            <option value="">Any</option>
+            <option value="1">1+</option>
+            <option value="2">2+</option>
+            <option value="3">3+</option>
+            <option value="4">4+</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh' }}>
+      <style>{`
+        .properties-layout {
+          display: flex;
+          gap: 32px;
+          align-items: flex-start;
+        }
+        .sidebar {
+          width: 260px;
+          flex-shrink: 0;
+          position: sticky;
+          top: 90px;
+        }
+        .mobile-filter-btn {
+          display: none;
+        }
+        .results-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          gap: 24px;
+        }
+        @media (max-width: 768px) {
+          .properties-layout {
+            flex-direction: column;
+          }
+          .sidebar {
+            width: 100% !important;
+            position: static !important;
+            display: none;
+          }
+          .sidebar.open {
+            display: block !important;
+          }
+          .mobile-filter-btn {
+            display: block !important;
+          }
+          .results-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
 
-      {/* Page Header */}
+      {/* Header */}
       <div style={{
         background: 'linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%)',
-        padding: '60px 24px',
-        textAlign: 'center',
+        padding: '60px 24px', textAlign: 'center',
       }}>
-        <h1 style={{ fontSize: '40px', fontWeight: '800', color: '#ffffff', marginBottom: '12px' }}>
+        <h1 style={{ fontSize: 'clamp(28px, 5vw, 40px)', fontWeight: '800', color: '#ffffff', marginBottom: '12px' }}>
           Browse Properties
         </h1>
         <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '17px' }}>
@@ -86,106 +162,37 @@ export default function PropertiesClient() {
       </div>
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 24px' }}>
-        <div style={{ display: 'flex', gap: '32px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
 
-          {/* Sidebar Filters */}
-          <div style={{
-            backgroundColor: '#ffffff',
-            borderRadius: '16px',
-            padding: '28px',
-            boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
-            width: '260px',
-            flexShrink: 0,
-            position: 'sticky',
-            top: '90px',
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-              <h3 style={{ fontWeight: '700', fontSize: '17px', color: '#1e293b' }}>Filters</h3>
-              <button onClick={clearFilters} style={{
-                background: 'none', border: 'none',
-                color: '#2563eb', fontSize: '13px',
-                fontWeight: '600', cursor: 'pointer',
-              }}>
-                Clear All
-              </button>
-            </div>
+        {/* Mobile Filter Toggle */}
+        <button
+          className="mobile-filter-btn"
+          onClick={() => setShowFilters(!showFilters)}
+          style={{
+            backgroundColor: '#2563eb', color: 'white',
+            border: 'none', padding: '12px 24px',
+            borderRadius: '10px', fontSize: '15px',
+            fontWeight: '600', cursor: 'pointer',
+            marginBottom: '20px', width: '100%',
+          }}
+        >
+          {showFilters ? '✕ Hide Filters' : '⚙️ Show Filters'}
+        </button>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <div>
-                <label style={labelStyle}>Location</label>
-                <input
-                  type="text"
-                  placeholder="City or state..."
-                  value={location}
-                  onChange={e => setLocation(e.target.value)}
-                  style={inputStyle}
-                />
-              </div>
+        <div className="properties-layout">
 
-              <div>
-                <label style={labelStyle}>Property Type</label>
-                <select value={type} onChange={e => setType(e.target.value)} style={inputStyle}>
-                  <option value="">All Types</option>
-                  <option value="House">House</option>
-                  <option value="Apartment">Apartment</option>
-                  <option value="Villa">Villa</option>
-                  <option value="Penthouse">Penthouse</option>
-                  <option value="Townhouse">Townhouse</option>
-                </select>
-              </div>
-
-              <div>
-                <label style={labelStyle}>Min Price ($)</label>
-                <input
-                  type="number"
-                  placeholder="e.g. 200000"
-                  value={minPrice}
-                  onChange={e => setMinPrice(e.target.value)}
-                  style={inputStyle}
-                />
-              </div>
-
-              <div>
-                <label style={labelStyle}>Max Price ($)</label>
-                <input
-                  type="number"
-                  placeholder="e.g. 1000000"
-                  value={maxPrice}
-                  onChange={e => setMaxPrice(e.target.value)}
-                  style={inputStyle}
-                />
-              </div>
-
-              <div>
-                <label style={labelStyle}>Min Bedrooms</label>
-                <select value={beds} onChange={e => setBeds(e.target.value)} style={inputStyle}>
-                  <option value="">Any</option>
-                  <option value="1">1+</option>
-                  <option value="2">2+</option>
-                  <option value="3">3+</option>
-                  <option value="4">4+</option>
-                </select>
-              </div>
-            </div>
+          {/* Sidebar */}
+          <div className={`sidebar ${showFilters ? 'open' : ''}`}>
+            {filterPanel}
           </div>
 
           {/* Results */}
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{
-              display: 'flex', justifyContent: 'space-between',
-              alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px',
-            }}>
-              <p style={{ color: '#64748b', fontSize: '15px' }}>
-                Showing <strong style={{ color: '#1e293b' }}>{filtered.length}</strong> properties
-              </p>
-            </div>
+            <p style={{ color: '#64748b', fontSize: '15px', marginBottom: '24px' }}>
+              Showing <strong style={{ color: '#1e293b' }}>{filtered.length}</strong> properties
+            </p>
 
             {filtered.length > 0 ? (
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-                gap: '24px',
-              }}>
+              <div className="results-grid">
                 {filtered.map(property => (
                   <PropertyCard key={property.id} property={property} />
                 ))}
@@ -201,11 +208,9 @@ export default function PropertiesClient() {
                 </h3>
                 <p style={{ color: '#64748b' }}>Try adjusting your filters to see more results.</p>
                 <button onClick={clearFilters} style={{
-                  marginTop: '20px',
-                  backgroundColor: '#2563eb', color: 'white',
-                  border: 'none', padding: '12px 28px',
-                  borderRadius: '10px', fontSize: '15px',
-                  fontWeight: '600', cursor: 'pointer',
+                  marginTop: '20px', backgroundColor: '#2563eb', color: 'white',
+                  border: 'none', padding: '12px 28px', borderRadius: '10px',
+                  fontSize: '15px', fontWeight: '600', cursor: 'pointer',
                 }}>
                   Clear Filters
                 </button>

@@ -4,11 +4,7 @@ import { useState } from 'react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
+    name: '', email: '', phone: '', subject: '', message: '',
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -46,22 +42,44 @@ export default function ContactPage() {
   return (
     <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh' }}>
 
+      <style>{`
+        .contact-grid {
+          display: grid;
+          grid-template-columns: 1fr 380px;
+          gap: 40px;
+          align-items: flex-start;
+        }
+        .form-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+        }
+        @media (max-width: 768px) {
+          .contact-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .form-row {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
+
       {/* Header */}
       <div style={{
         background: 'linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%)',
         padding: '60px 24px',
         textAlign: 'center',
       }}>
-        <h1 style={{ fontSize: '40px', fontWeight: '800', color: '#ffffff', marginBottom: '12px' }}>
+        <h1 style={{ fontSize: 'clamp(28px, 5vw, 40px)', fontWeight: '800', color: '#ffffff', marginBottom: '12px' }}>
           Get In Touch
         </h1>
         <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '17px' }}>
-          Have a question or wanna to list a property? We'd love to hear from you.
+          Have a question or want to list a property? We'd love to hear from you.
         </p>
       </div>
 
       <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '60px 24px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 420px', gap: '40px', alignItems: 'flex-start', flexWrap: 'wrap' as const }}>
+        <div className="contact-grid">
 
           {/* Left — Form */}
           <div style={{
@@ -99,54 +117,28 @@ export default function ContactPage() {
                 </p>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-
-                  {/* Name & Email */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div className="form-row">
                     <div>
                       <label style={labelStyle}>Full Name *</label>
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="John Doe"
-                        value={formData.name}
-                        onChange={handleChange}
-                        style={inputStyle}
-                      />
+                      <input type="text" name="name" placeholder="John Doe"
+                        value={formData.name} onChange={handleChange} style={inputStyle} />
                     </div>
                     <div>
                       <label style={labelStyle}>Email Address *</label>
-                      <input
-                        type="email"
-                        name="email"
-                        placeholder="john@example.com"
-                        value={formData.email}
-                        onChange={handleChange}
-                        style={inputStyle}
-                      />
+                      <input type="email" name="email" placeholder="john@example.com"
+                        value={formData.email} onChange={handleChange} style={inputStyle} />
                     </div>
                   </div>
 
-                  {/* Phone & Subject */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div className="form-row">
                     <div>
                       <label style={labelStyle}>Phone Number</label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        placeholder="(254) 7123-45678"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        style={inputStyle}
-                      />
+                      <input type="tel" name="phone" placeholder="(555) 000-0000"
+                        value={formData.phone} onChange={handleChange} style={inputStyle} />
                     </div>
                     <div>
                       <label style={labelStyle}>Subject</label>
-                      <select
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        style={inputStyle}
-                      >
+                      <select name="subject" value={formData.subject} onChange={handleChange} style={inputStyle}>
                         <option value="">Select a subject</option>
                         <option value="buying">Buying a Property</option>
                         <option value="selling">Selling a Property</option>
@@ -157,29 +149,19 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  {/* Message */}
                   <div>
                     <label style={labelStyle}>Message *</label>
-                    <textarea
-                      name="message"
-                      placeholder="Tell us how we can help you..."
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={5}
-                      style={{ ...inputStyle, resize: 'vertical' }}
-                    />
+                    <textarea name="message" placeholder="Tell us how we can help you..."
+                      value={formData.message} onChange={handleChange}
+                      rows={5} style={{ ...inputStyle, resize: 'vertical' }} />
                   </div>
 
-                  <button
-                    onClick={handleSubmit}
-                    style={{
-                      backgroundColor: '#2563eb', color: 'white',
-                      border: 'none', padding: '14px',
-                      borderRadius: '10px', fontSize: '16px',
-                      fontWeight: '700', cursor: 'pointer',
-                      width: '100%',
-                    }}
-                  >
+                  <button onClick={handleSubmit} style={{
+                    backgroundColor: '#2563eb', color: 'white',
+                    border: 'none', padding: '14px',
+                    borderRadius: '10px', fontSize: '16px',
+                    fontWeight: '700', cursor: 'pointer', width: '100%',
+                  }}>
                     Send Message →
                   </button>
                 </div>
@@ -189,10 +171,9 @@ export default function ContactPage() {
 
           {/* Right — Info Cards */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-
             {[
-              { icon: '📍', title: 'Our Office', lines: ['123 Kaunda Street', 'Nairobi, N 00100'] },
-              { icon: '📞', title: 'Phone', lines: ['(254) 7123-45678', 'Mon–Fri, 9am to 6pm'] },
+              { icon: '📍', title: 'Our Office', lines: ['123 Realty Avenue', 'New York, NY 10001'] },
+              { icon: '📞', title: 'Phone', lines: ['(555) 123-4567', 'Mon–Fri, 9am to 6pm'] },
               { icon: '✉️', title: 'Email', lines: ['hello@estatefind.com', 'support@estatefind.com'] },
             ].map(item => (
               <div key={item.title} style={{
@@ -219,7 +200,6 @@ export default function ContactPage() {
               </div>
             ))}
 
-            {/* Working Hours */}
             <div style={{
               backgroundColor: '#ffffff', borderRadius: '16px',
               padding: '24px', boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
@@ -236,6 +216,7 @@ export default function ContactPage() {
                   display: 'flex', justifyContent: 'space-between',
                   fontSize: '14px', paddingBottom: '10px',
                   marginBottom: '10px', borderBottom: '1px solid #f1f5f9',
+                  flexWrap: 'wrap', gap: '4px',
                 }}>
                   <span style={{ color: '#64748b' }}>{row.day}</span>
                   <span style={{ fontWeight: '600', color: '#1e293b' }}>{row.hours}</span>
