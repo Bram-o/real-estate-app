@@ -218,7 +218,7 @@ export default function PropertyDetailPage() {
                   JD
                 </div>
                 <div>
-                  <div style={{ fontWeight: '700', color: '#1e293b', fontSize: '15px' }}>James Davidson</div>
+                  <div style={{ fontWeight: '700', color: '#1e293b', fontSize: '15px' }}>John Doe</div>
                   <div style={{ color: '#64748b', fontSize: '13px' }}>Licensed Real Estate Agent</div>
                   <div style={{ color: '#f59e0b', fontSize: '13px', marginTop: '2px' }}>⭐⭐⭐⭐⭐ 4.9</div>
                 </div>
@@ -234,14 +234,14 @@ export default function PropertyDetailPage() {
                 }}>
                   📩 Contact Agent
                 </Link>
-                <a href="tel:+15551234567" style={{
+                <a href="tel:+254712345678" style={{
                   backgroundColor: '#f1f5f9', color: '#1e293b',
                   padding: '14px', borderRadius: '10px',
                   textDecoration: 'none', fontWeight: '600',
                   fontSize: '15px', textAlign: 'center',
                   display: 'block',
                 }}>
-                  📞 (555) 123-4567
+                  📞 (254) 7123-45678
                 </a>
               </div>
             </div>

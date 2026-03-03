@@ -57,8 +57,8 @@ export default function Footer() {
           <div>
             <h4 style={{ color: '#ffffff', fontWeight: '600', marginBottom: '16px', fontSize: '15px' }}>Contact</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14px' }}>
-              <p>📍 123 Realty Ave, New York, NY</p>
-              <p>📞 (555) 123-4567</p>
+              <p>📍 123 Nyeri, Nairobi, N 00100</p>
+              <p>📞 (254) 7123-45678</p>
               <p>✉️ hello@estatefind.com</p>
             </div>
           </div>
@@ -74,7 +74,7 @@ export default function Footer() {
           gap: '12px',
           fontSize: '13px',
         }}>
-          <p>© 2025 EstateFind. All rights reserved.</p>
+          <p>© 2026 EstateFind. All rights reserved.</p>
           <div style={{ display: 'flex', gap: '24px' }}>
             <Link href="#" style={{ color: '#94a3b8', textDecoration: 'none' }}>Privacy Policy</Link>
             <Link href="#" style={{ color: '#94a3b8', textDecoration: 'none' }}>Terms of Service</Link>

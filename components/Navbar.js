@@ -53,9 +53,6 @@ export default function Navbar() {
           <Link href="/properties" style={{ textDecoration: 'none', color: '#475569', fontWeight: '500', fontSize: '15px' }}>
             Properties
           </Link>
-          <Link href="/contact" style={{ textDecoration: 'none', color: '#475569', fontWeight: '500', fontSize: '15px' }}>
-            Contact
-          </Link>
           <Link href="/contact" style={{
             backgroundColor: '#2563eb',
             color: 'white',

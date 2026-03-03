@@ -56,7 +56,7 @@ export default function ContactPage() {
           Get In Touch
         </h1>
         <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '17px' }}>
-          Have a question or want to list a property? We'd love to hear from you.
+          Have a question or wanna to list a property? We'd love to hear from you.
         </p>
       </div>
 
@@ -133,7 +133,7 @@ export default function ContactPage() {
                       <input
                         type="tel"
                         name="phone"
-                        placeholder="(555) 000-0000"
+                        placeholder="(254) 7123-45678"
                         value={formData.phone}
                         onChange={handleChange}
                         style={inputStyle}
@@ -191,8 +191,8 @@ export default function ContactPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
             {[
-              { icon: '📍', title: 'Our Office', lines: ['123 Realty Avenue', 'New York, NY 10001'] },
-              { icon: '📞', title: 'Phone', lines: ['(555) 123-4567', 'Mon–Fri, 9am to 6pm'] },
+              { icon: '📍', title: 'Our Office', lines: ['123 Kaunda Street', 'Nairobi, N 00100'] },
+              { icon: '📞', title: 'Phone', lines: ['(254) 7123-45678', 'Mon–Fri, 9am to 6pm'] },
               { icon: '✉️', title: 'Email', lines: ['hello@estatefind.com', 'support@estatefind.com'] },
             ].map(item => (
               <div key={item.title} style={{

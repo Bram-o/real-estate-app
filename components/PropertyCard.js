@@ -73,7 +73,7 @@ export default function PropertyCard({ property }) {
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ fontSize: '20px', fontWeight: '800', color: '#2563eb' }}>
-              ${property.price.toLocaleString()}
+              Ksh {property.price.toLocaleString()}
             </span>
             <span style={{
               backgroundColor: '#eff6ff', color: '#2563eb',
